@@ -1,0 +1,79 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Reportazhyst.WP8.CategoryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="728" d:DesignWidth="480"
+    Foreground="DimGray"
+    shell:SystemTray.IsVisible="{Binding IsProgressVisible}"
+    shell:SystemTray.Opacity="0"
+    shell:SystemTray.ForegroundColor="DimGray">
+
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator IsIndeterminate="True" Text="Завантаження..." IsVisible="True" />
+    </shell:SystemTray.ProgressIndicator>
+
+    <Grid x:Name="LayoutRoot" Background="Snow">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="0,12" Grid.Row="0">
+            <Border BorderBrush="Black" BorderThickness="0,0,0,3">
+                <Border.Background>
+                    <ImageBrush ImageSource="TitleBackground.png" Stretch="Fill"/>
+                </Border.Background>
+                <Grid Margin="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="TitleLogo.png" Margin="24,0" Grid.Column="0" />
+                    <Image Grid.Column="2" Name="TitleInfo" Source="Images/appbar.information.circle.png" Margin="0,20,0,0" Tap="TitleInfo_Tap"/>
+                </Grid>
+            </Border>
+            <TextBlock Text="Гумористичний сайт вигаданих новин" Margin="24,0"/>
+        </StackPanel>
+
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,-14,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Name="CategoryName" Text="{Binding SelectedCategory.Name}" Style="{StaticResource PhoneTextTitle1Style}" Foreground="OrangeRed" />
+            <ListBox Grid.Row="1" Name="NewsList" SelectionChanged="NewsList_SelectionChanged" ItemsSource="{Binding Data}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="12,0,0,17">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="112"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image VerticalAlignment="Top" Margin="0,12,0,0" Grid.Column="0" Source="{Binding ImageUrl}" Stretch="UniformToFill" Width="100" Height="100"/>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding Date}" Foreground="OrangeRed" Style="{StaticResource PhoneTextSubtleStyle}" />
+                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextTitle3Style}" Foreground="DimGray"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" Mode="Minimized" IsMenuEnabled="True" BackgroundColor="DimGray" ForegroundColor="White" Opacity="1">
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.refresh.png" Click="AppBtnUpdate_Click" x:Name="AppBtnUpdate" Text="Оновити"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.information.circle.png" Click="AppBtnInfo_Click" x:Name="AppBtnInfo" Text="Інфо"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>
